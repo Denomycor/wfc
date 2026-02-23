@@ -1,48 +1,60 @@
 #pragma once
+#include <assert.h>
 #include <vector>
 
 
 template<typename T>
-class array2d {
+class Array2D {
 private:
-    int width, height;
-    std::vector<T> buffer;
+    std::size_t width, height;
+    std::vector<T> data;
 
 public:
-    array2d(int p_width, int p_heigth)
-    : width(p_heigth), height(p_heigth), buffer(p_width * p_heigth)
+    Array2D(std::size_t p_width, std::size_t p_heigth)
+    : width(p_heigth), height(p_heigth), data(p_width * p_heigth)
     {}    
 
-    array2d(int p_width, int p_heigth, const T& init_value)
-    : width(p_heigth), height(p_heigth), buffer(p_width * p_heigth, init_value)
+    Array2D(std::size_t p_width, std::size_t p_heigth, const T& init_value)
+    : width(p_heigth), height(p_heigth), data(p_width * p_heigth, init_value)
     {}    
 
-    T& elem(int x, int y) {
-        return buffer[y * width + x];
+    T& elem(std::size_t x, std::size_t y) {
+        assert(y < height && x < width);
+        return data[y * width + x];
     }
 
-    const T& elem(int x, int y) const {
-        return buffer[y * width + x];
+    const T& get(std::size_t x, std::size_t y) const {
+        assert(y < height && x < width);
+        return data[y * width + x];
     }
 
     template<typename U>
-    void set(int x, int y, U&& value) {
-        buffer[y * width + x] = std::forward<U>(value);
+    void set(std::size_t x, std::size_t y, U&& value) {
+        assert(y < height && x < width);
+        data[y * width + x] = std::forward<U>(value);
     }
 
     auto begin() {
-        return buffer.begin();
+        return data.begin();
+    }
+
+    auto cbegin() const {
+        return data.cbegin();
     }
 
     auto end() {
-        return buffer.end();
+        return data.end();
     }
 
-    int get_width() const {
+    auto cend() const{
+        return data.cend();
+    }
+
+    std::size_t get_width() const {
         return width;
     }
 
-    int get_height() const {
+    std::size_t get_height() const {
         return height;
     }
 };
