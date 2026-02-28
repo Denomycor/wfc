@@ -1,14 +1,18 @@
-#include "wfc.hpp"
-
+#include "wave.hpp"
+#include <cstdio>
+#include <cstdlib>
 
 int main(int argc, char** argv){
-    std::vector<int> ids;
-    ids.emplace_back(1);
-    ids.emplace_back(2);
-    ids.emplace_back(3);
-    ids.emplace_back(4);
+    srand(atoi(argv[1]));
 
-    wfc_state_t state(5, 5, ids);
-    print_wfc_state(state);
+    std::map<int, double> m{{1,50}, {2,25}, {3,25}};
+    Wave wave(6, 6, m);
+    wave.get_constraints().add(1, {1,2}, {1,2}, {1,2}, {1,2});
+    wave.get_constraints().add(2, {1,2,3}, {1,2,3}, {1,2,3}, {1,2,3});
+    wave.get_constraints().add(3, {2,3}, {2,3}, {2,3}, {2,3});
+
+    wave.run();
+    wave.print();
+
 }
 

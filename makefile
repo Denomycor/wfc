@@ -17,7 +17,7 @@ OBJFILES := $(SRCFILES:%.$(EXTENSION)=%.o)
 
 MACROS :=
 BASEFLAGS := $(addprefix -D ,$(MACROS)) --std=c++17 -Wall
-DEBUGFLAGS := $(BASEFLAGS) -g
+DEBUGFLAGS := $(BASEFLAGS) -g -fsanitize=address
 RELEASEFLAGS := $(BASEFLAGS) -O2
 
 #accumulators

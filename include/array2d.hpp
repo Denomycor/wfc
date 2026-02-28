@@ -2,7 +2,6 @@
 #include <assert.h>
 #include <vector>
 
-
 template<typename T>
 class Array2D {
 private:
@@ -11,20 +10,20 @@ private:
 
 public:
     Array2D(std::size_t p_width, std::size_t p_heigth)
-    : width(p_heigth), height(p_heigth), data(p_width * p_heigth)
+    : width(p_width), height(p_heigth), data(p_width * p_heigth)
     {}    
 
     Array2D(std::size_t p_width, std::size_t p_heigth, const T& init_value)
     : width(p_heigth), height(p_heigth), data(p_width * p_heigth, init_value)
     {}    
 
-    T& elem(std::size_t x, std::size_t y) {
-        assert(y < height && x < width);
+    T& get(std::size_t x, std::size_t y) {
+        // assert(y < height && x < width);
         return data[y * width + x];
     }
 
     const T& get(std::size_t x, std::size_t y) const {
-        assert(y < height && x < width);
+        // assert(y < height && x < width);
         return data[y * width + x];
     }
 
@@ -56,6 +55,10 @@ public:
 
     std::size_t get_height() const {
         return height;
+    }
+
+    std::size_t size() const {
+        return data.size();
     }
 };
 
